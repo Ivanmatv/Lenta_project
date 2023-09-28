@@ -4,8 +4,8 @@ from django.db import models
 class Shops(models.Model):
     """Модель торгового комплекса."""
     store = models.CharField(
-        'Магазин', 
-        max_length=100, 
+        'Магазин',
+        max_length=100,
         db_index=True
     )
     city = models.CharField('Город', max_length=100)

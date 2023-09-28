@@ -22,8 +22,11 @@ class User(AbstractBaseUser, PermissionsMixin):
         'Фамилия',
         max_length=150,
     )
+    # Флаг, указывающий, активен ли пользователь.
     is_active = models.BooleanField(default=True)
+    # Флаг, указывающий, является ли пользователь сотрудником.
     is_staff = models.BooleanField(default=False)
+    # Флаг, указывающий, является ли пользователь администратором.
     is_admin = models.BooleanField(default=False)
 
     objects = UserManager()

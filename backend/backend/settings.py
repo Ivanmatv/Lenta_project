@@ -18,6 +18,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
     'djoser',
     'users',
 ]
@@ -31,6 +32,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -59,8 +62,8 @@ DATABASES = {
         'NAME': 'db_lenta',
         'USER': 'admin1',
         'PASSWORD': 'qwerty1209',
-        'HOST': 'localhost',  # или адрес сервера PostgreSQL
-        'PORT': '5432',           # порт PostgreSQL
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -99,14 +102,15 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-AUTHENTICATION_BACKENDS = [
-    # Аутентификация по умолчанию
-    'django.contrib.auth.backends.ModelBackend',
-]
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
     'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.IsAdminUser',
+        'users.permissions.CustomPermissions',
+        'users.permissions.CustomPermissionsAccess'
     ],
 }
 
@@ -121,4 +125,10 @@ DJOSER = {
         "user": "users.serializers.CustomUserSerializer",
         "current_user": "users.serializers.CustomUserSerializer",
     },
+}
+
+SIMPLE_JWT = {
+    # Устанавливаем срок жизни токена
+   'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+   'AUTH_HEADER_TYPES': ('Bearer',),
 }

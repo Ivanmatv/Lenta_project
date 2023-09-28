@@ -1,4 +1,5 @@
 from djoser.serializers import UserCreateSerializer, UserSerializer
+from rest_framework.permissions import AllowAny
 
 from .models import User
 
@@ -19,6 +20,8 @@ class CustomUserCreateSerializer(UserCreateSerializer):
         )
         extra_kwargs = {'password': {'write_only': True}}
 
+    permission_classes = [AllowAny]
+    
     def create(self, validated_data):
         user = User.objects.create(
             email=validated_data['email'],

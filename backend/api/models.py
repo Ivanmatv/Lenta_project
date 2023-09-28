@@ -3,11 +3,20 @@ from django.db import models
 
 class Shops(models.Model):
     """Модель торгового комплекса."""
-    store = models.CharField('Магазин', max_length=100)
+    store = models.CharField(
+        'Магазин', 
+        max_length=100, 
+        db_index=True
+    )
     city = models.CharField('Город', max_length=100)
     division = models.CharField('Дивизион', max_length=100)
+    type_format = models.IntegerField()
+    loc = models.IntegerField()
+    size = models.IntegerField()
+    is_active = models.BooleanField()
 
     class Meta:
+        ordering = ('store',)
         verbose_name = 'Торговый комплекс'
         verbose_name_plural = 'Тороговые комплексы'
 
@@ -25,6 +34,7 @@ class Categories(models.Model):
     group = models.CharField('Группа', max_length=100)
     category = models.CharField('Категория', max_length=100)
     subcategory = models.CharField('Подкатегория', max_length=100)
+    uom = models.IntegerField()
 
     class Meta:
         verbose_name = 'Товар'
@@ -43,7 +53,7 @@ class Forecast(models.Model):
     """Модель прогноза."""
     store = models.ForeignKey(Shops, on_delete=models.CASCADE)
     forecast_date = models.DateTimeField('Дата публикации', auto_now_add=True)
-    forecast = models.ForeignKey(Categories, on_delete=models.CASCADE)
+    forecast = models.JSONField()
 
     class Meta:
         verbose_name = 'Прогноз'
@@ -75,3 +85,15 @@ class Sales(models.Model):
             self.store,
             self.sku
         )
+
+
+class SalesEntry(models.Model):
+    sales = models.ForeignKey(
+        Sales, related_name='fact', on_delete=models.CASCADE
+    )
+    date = models.DateField()
+    sales_type = models.IntegerField()
+    sales_units = models.IntegerField()
+    sales_units_promo = models.IntegerField()
+    sales_rub = models.DecimalField(max_digits=10, decimal_places=2)
+    sales_run_promo = models.DecimalField(max_digits=10, decimal_places=2)

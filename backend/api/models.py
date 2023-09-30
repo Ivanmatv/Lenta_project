@@ -8,11 +8,28 @@ class Shops(models.Model):
         max_length=100,
         db_index=True
     )
-    city = models.CharField('Город', max_length=100)
-    division = models.CharField('Дивизион', max_length=100)
-    type_format = models.IntegerField()
-    loc = models.IntegerField()
-    size = models.IntegerField()
+    city = models.CharField(
+        'Город',
+        max_length=100,
+        db_index=True
+    )
+    division = models.CharField(
+        'Дивизион',
+        max_length=100,
+        db_index=True
+    )
+    type_format = models.IntegerField(
+        'Формат магазина',
+        db_index=True
+    )
+    loc = models.IntegerField(
+        'Локация магазтна',
+        db_index=True
+    )
+    size = models.IntegerField(
+        'Размер магазина',
+        db_index=True
+    )
     is_active = models.BooleanField()
 
     class Meta:
@@ -51,8 +68,14 @@ class Categories(models.Model):
 
 class Forecast(models.Model):
     """Модель прогноза."""
-    store = models.ForeignKey(Shops, on_delete=models.CASCADE)
-    forecast_date = models.DateTimeField('Дата публикации', auto_now_add=True)
+    store = models.ForeignKey(
+        'Магазин',
+        Shops
+    )
+    forecast_date = models.DateTimeField(
+        'Дата публикации',
+        auto_now_add=True
+    )
     forecast = models.JSONField()
 
     class Meta:
@@ -75,6 +98,7 @@ class Sales(models.Model):
     sku = models.ForeignKey(
         Categories, on_delete=models.CASCADE
     )
+    fact = models.JSONField()
 
     class Meta:
         verbose_name = 'Информация'
@@ -88,7 +112,7 @@ class Sales(models.Model):
 
 
 class SalesEntry(models.Model):
-    sales = models.ForeignKey(
+    fact = models.ForeignKey(
         Sales, related_name='fact', on_delete=models.CASCADE
     )
     date = models.DateField()

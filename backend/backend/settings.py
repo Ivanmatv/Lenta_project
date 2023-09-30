@@ -18,7 +18,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'drf_yasg',
-    'api'
+    'api',
+    'categories'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,11 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': os.path.join(BASE_DIR, 'db.postgresql'),
+        'NAME': 'db_categoris',
+        'USER': 'admin_m',
+        'PASSWORD': 'qwerty1209',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 

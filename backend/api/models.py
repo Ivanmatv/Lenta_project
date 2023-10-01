@@ -111,7 +111,8 @@ class Sales(models.Model):
         )
 
 
-class SalesEntry(models.Model):
+class SalesFact(models.Model):
+    """Данные о товаре"""
     fact = models.ForeignKey(
         Sales, related_name='fact', on_delete=models.CASCADE
     )

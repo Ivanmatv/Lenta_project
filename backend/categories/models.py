@@ -40,6 +40,9 @@ class Categories(models.Model):
         return f'{self.group} - {self.category} - {self.subcategory} - {self.sku}'
 
 
+
+
+
 class Sales(models.Model):
     """Модель с информацией о количестве проданных товаров."""
     store = models.ForeignKey(
@@ -51,9 +54,10 @@ class Sales(models.Model):
     date = models.DateField(blank=True, null=True)
     sales_type = models.IntegerField()
     sales_units = models.IntegerField()
-    sales_units_promo = models.IntegerField()
+    sales_units_promo = models.IntegerField(blank=True, null=True)
     sales_rub = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
     sales_run_promo = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
+
 
     class Meta:
         verbose_name = 'Информация'
@@ -61,6 +65,23 @@ class Sales(models.Model):
 
     def __str__(self):
         return f'{self.store} - {self.sku}'
+
+'''class SalesFact(models.Model):
+    sale = models.ForeignKey(Sales, on_delete=models.CASCADE, related_name='fact')
+    date = models.DateField()
+    sales_type = models.IntegerField()
+    sales_units = models.DecimalField(max_digits=10, decimal_places=2)
+    sales_units_promo = models.DecimalField(max_digits=10, decimal_places=2)
+    sales_rub = models.DecimalField(max_digits=10, decimal_places=2)
+    sales_run_promo = models.DecimalField(max_digits=10, decimal_places=2)
+
+
+    class Meta:
+        verbose_name = 'факт_инфо'
+        verbose_name_plural = 'факт_инфо'
+
+    def __str__(self):
+        return str(self.date)'''
 
 
 class SalesSub(models.Model):

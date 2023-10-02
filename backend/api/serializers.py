@@ -15,23 +15,27 @@ class CategoriesSerializer(serializers.ModelSerializer):
         read_only_fields = '__all__',
 
 
-class SalesFactSerializer(serializers.Serializer):
-    sales_type = serializers.IntegerField()
-    sales_units = serializers.IntegerField()
-    sales_units_promo = serializers.IntegerField()
-    sales_rub = serializers.DecimalField(max_digits=10, decimal_places=2)
-    sales_run_promo = serializers.DecimalField(max_digits=10, decimal_places=2)
+class SalesFactSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Sales
+        fields = ['date', 'sales_type', 'sales_units', 'sales_units_promo', 'sales_rub', 'sales_run_promo']
+
+class SalesSerializer(serializers.ModelSerializer):
+    fact = serializers.SerializerMethodField()
 
     class Meta:
         model = Sales
-        fields = ['sales_type', 'sales_units', 'sales_units_promo','sales_rub','sales_run_promo']
+        fields = ('store', 'sku', 'fact')
+    
+    def get_fact(self, obj):
+        date = self.context.get('date', None)
+        sales_data = Sales.objects.filter(store=obj.store, sku=obj.sku)
+        if date:
+            sales_data = sales_data.filter(date=date)
 
-class SalesSerializer(serializers.Serializer):
-    fact = SalesFactSerializer(many=True)
-    class Meta:
-        model = Sales
-        fields = ['store', 'sku', 'fact']
-#        fields = '__all__'
+        fact_data = SalesFactSerializer(sales_data, many=True).data
+        return fact_data
+
 
 class ShopsSerializer(serializers.ModelSerializer):
     class Meta:

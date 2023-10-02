@@ -18,6 +18,12 @@ class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
 class SalesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Sales.objects.all()
     serializer_class = SalesSerializer
+
+    def list(self, request, *args, **kwargs):
+        date = request.query_params.get('date', None)
+        context = {'date': date}
+        serializer = self.get_serializer(self.queryset, many=True, context=context)
+        return Response(serializer.data)
   
 
 class ForecastViewSet(viewsets.ReadOnlyModelViewSet):

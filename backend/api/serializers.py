@@ -1,11 +1,12 @@
 from rest_framework import serializers
-from .models import Category, Sales, SalesFact, Shop, Forecast
+
+from .models import Forecast, Sales, SalesFact, Shops
 
 
 class ShopSerializer(serializers.ModelSerializer):
     """Сериализатор для магазинов."""
     class Meta:
-        model = Shop
+        model = Shops
         fields = '__all__'
 
 

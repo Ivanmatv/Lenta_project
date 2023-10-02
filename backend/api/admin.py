@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import Category, Forecast, Sales, Shop
+
+from .models import Forecast, Sales, Shops
 
 
 @admin.register(Sales)
@@ -10,7 +11,7 @@ class SalesAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
-@admin.register(Shop)
+@admin.register(Shops)
 class ShopAdmin(admin.ModelAdmin):
     list_display = (
         'store', 'city', 'division',
@@ -32,11 +33,11 @@ class ForecastAdmin(admin.ModelAdmin):
     empty_value_display = '-пусто-'
 
 
-@admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
-    list_display = (
-        'sku', 'group', 'category',
-        'subcategory', 'uom'
-    )
-    search_fields = ('group', 'category', 'subcategory')
-    empty_value_display = '-пусто-'
+# @admin.register(Category)
+# class CategoryAdmin(admin.ModelAdmin):
+#     list_display = (
+#         'sku', 'group', 'category',
+#         'subcategory', 'uom'
+#     )
+#     search_fields = ('group', 'category', 'subcategory')
+#     empty_value_display = '-пусто-'

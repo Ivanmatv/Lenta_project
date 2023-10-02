@@ -18,15 +18,15 @@ class Shops(models.Model):
         max_length=100,
         db_index=True
     )
-    type_format = models.IntegerField(
+    type_format = models.PositiveIntegerField(
         'Формат магазина',
         db_index=True
     )
-    loc = models.IntegerField(
-        'Локация магазтна',
+    loc = models.PositiveIntegerField(
+        'Локация магазина',
         db_index=True
     )
-    size = models.IntegerField(
+    size = models.PositiveIntegerField(
         'Размер магазина',
         db_index=True
     )
@@ -37,40 +37,38 @@ class Shops(models.Model):
         verbose_name = 'Торговый комплекс'
         verbose_name_plural = 'Тороговые комплексы'
 
-    def __str__(self):
-        return (
-            self.store,
-            self.city,
-            self.division
-        )
+    def str(self):
+        return f'{self.store}, {self.city}, {self.division}'
 
 
-class Categories(models.Model):
-    """Модель товарной иерархии."""
-    sku = models.CharField('Товар', max_length=100)
-    group = models.CharField('Группа', max_length=100)
-    category = models.CharField('Категория', max_length=100)
-    subcategory = models.CharField('Подкатегория', max_length=100)
-    uom = models.IntegerField()
+# class Categories(models.Model):
+#     """Модель товарной иерархии."""
+#     sku = models.CharField('Товар', max_length=100)
+#     group = models.CharField('Группа', max_length=100)
+#     category = models.CharField('Категория', max_length=100)
+#     subcategory = models.CharField('Подкатегория', max_length=100)
+#     uom = models.IntegerField()
 
-    class Meta:
-        verbose_name = 'Товар'
-        verbose_name_plural = 'Товары'
+#     class Meta:
+#         verbose_name = 'Товар'
+#         verbose_name_plural = 'Товары'
 
-    def __str__(self):
-        return (
-            self.sku,
-            self.group,
-            self.category,
-            self.subcategory
-        )
+#     def __str__(self):
+#         return (
+#             self.sku,
+#             self.group,
+#             self.category,
+#             self.subcategory
+#         )
 
 
 class Forecast(models.Model):
     """Модель прогноза."""
     store = models.ForeignKey(
-        'Магазин',
-        Shops
+        Shops,
+        models.SET_NULL,
+        blank=True,
+        null=True,
     )
     forecast_date = models.DateTimeField(
         'Дата публикации',
@@ -83,42 +81,38 @@ class Forecast(models.Model):
         verbose_name_plural = 'Прогнозы'
 
     def __str__(self):
-        return (
-            self.store,
-            self.forecast_date,
-            self.forecast
-        )
+        return f'{self.store}, {self.forecast_date}, {self.forecast}'
 
 
-class Sales(models.Model):
-    """Модель с информацией о количестве проданных товаров."""
-    store = models.ForeignKey(
-        Shops, on_delete=models.CASCADE
-    )
-    sku = models.ForeignKey(
-        Categories, on_delete=models.CASCADE
-    )
-    fact = models.JSONField()
+# class Sales(models.Model):
+#     """Модель с информацией о количестве проданных товаров."""
+#     store = models.ForeignKey(
+#         Shops, on_delete=models.CASCADE
+#     )
+#     sku = models.ForeignKey(
+#         Categories, on_delete=models.CASCADE
+#     )
+#     fact = models.JSONField()
 
-    class Meta:
-        verbose_name = 'Информация'
-        verbose_name_plural = 'Информации'
+#     class Meta:
+#         verbose_name = 'Информация'
+#         verbose_name_plural = 'Информации'
 
-    def __str__(self):
-        return (
-            self.store,
-            self.sku
-        )
+#     def __str__(self):
+#         return (
+#             self.store,
+#             self.sku
+#         )
 
 
-class SalesFact(models.Model):
-    """Данные о товаре"""
-    fact = models.ForeignKey(
-        Sales, related_name='fact', on_delete=models.CASCADE
-    )
-    date = models.DateField()
-    sales_type = models.IntegerField()
-    sales_units = models.IntegerField()
-    sales_units_promo = models.IntegerField()
-    sales_rub = models.DecimalField(max_digits=10, decimal_places=2)
-    sales_run_promo = models.DecimalField(max_digits=10, decimal_places=2)
+# class SalesFact(models.Model):
+#     """Данные о товаре"""
+#     fact = models.ForeignKey(
+#         Sales, related_name='fact', on_delete=models.CASCADE
+#     )
+#     date = models.DateField()
+#     sales_type = models.IntegerField()
+#     sales_units = models.IntegerField()
+#     sales_units_promo = models.IntegerField()
+#     sales_rub = models.DecimalField(max_digits=10, decimal_places=2)
+#     sales_run_promo = models.DecimalField(max_digits=10, decimal_places=2)

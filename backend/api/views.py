@@ -2,19 +2,18 @@ from django_filters.rest_framework import DjangoFilterBackend
 
 from rest_framework import viewsets
 
-from .models import Forecast, Sales, Shops
+from .models import Forecast, Shops
 from .serializers import (
     ForecastSerializer,
-    SalesSerializer,
     ShopSerializer
 )
 
 
-class SaleViewSet(viewsets.ModelViewSet):
-    """Представления для покупок."""
-    queryset = Sales.objects.all()
-    serializer_class = SalesSerializer
-    filter_backends = (DjangoFilterBackend, )
+# class SaleViewSet(viewsets.ModelViewSet):
+#     """Представления для покупок."""
+#     queryset = Sales.objects.all()
+#     serializer_class = SalesSerializer
+#     filter_backends = (DjangoFilterBackend, )
 
 
 class ShopViewSet(viewsets.ModelViewSet):

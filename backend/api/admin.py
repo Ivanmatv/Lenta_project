@@ -1,14 +1,14 @@
 from django.contrib import admin
 
-from .models import Forecast, Sales, Shops
+from .models import Forecast, Shops
 
 
-@admin.register(Sales)
-class SalesAdmin(admin.ModelAdmin):
-    list_display = ('store', 'sku')
-    search_fields = ('store',)
-    list_filter = ('store', 'sku')
-    empty_value_display = '-пусто-'
+# @admin.register(Sales)
+# class SalesAdmin(admin.ModelAdmin):
+#     list_display = ('store', 'sku')
+#     search_fields = ('store',)
+#     list_filter = ('store', 'sku')
+#     empty_value_display = '-пусто-'
 
 
 @admin.register(Shops)

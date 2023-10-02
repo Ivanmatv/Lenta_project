@@ -15,7 +15,7 @@ class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CategoriesSerializer
 
 
-class  SalesViewSet(viewsets.ReadOnlyModelViewSet):
+class SalesViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Sales.objects.all()
     serializer_class = SalesSerializer
   

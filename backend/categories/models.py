@@ -48,7 +48,7 @@ class Sales(models.Model):
     sku = models.ForeignKey(
         Categories, on_delete=models.CASCADE
     )
-    # date = models.DateField(blank=True, null=True)
+    date = models.DateField(blank=True, null=True)
     sales_type = models.IntegerField()
     sales_units = models.IntegerField()
     sales_units_promo = models.IntegerField()
@@ -72,11 +72,13 @@ class SalesSub(models.Model):
         Categories, on_delete=models.CASCADE
     )
     target = models.IntegerField(default=0)
-#    date = models.DateField()
+    date = models.DateField()
 
     class Meta:
         verbose_name = 'прогонзыы'
         
+    def formatted_date(self):
+        return self.date.strftime("%d")
 
     def __str__(self):
         return f'{self.store} - {self.sku}'

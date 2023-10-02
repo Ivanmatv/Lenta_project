@@ -1,5 +1,4 @@
 from rest_framework import serializers
-from django.db import models
 
 from categories.models import Categories, Shops, Sales, Forecast
 
@@ -9,7 +8,7 @@ class CategoriesSerializer(serializers.ModelSerializer):
     category = serializers.CharField()
     subcategory = serializers.CharField()
     uom = serializers.IntegerField()
-#    date = models.DateField()
+
     class Meta:
         model = Categories
         fields = '__all__'
@@ -17,7 +16,6 @@ class CategoriesSerializer(serializers.ModelSerializer):
 
 
 class SalesFactSerializer(serializers.Serializer):
-#    date = serializers.DateField()
     sales_type = serializers.IntegerField()
     sales_units = serializers.IntegerField()
     sales_units_promo = serializers.IntegerField()
@@ -26,14 +24,14 @@ class SalesFactSerializer(serializers.Serializer):
 
     class Meta:
         model = Sales
-        fields = '__all__'
+        fields = ['sales_type', 'sales_units', 'sales_units_promo','sales_rub','sales_run_promo']
 
 class SalesSerializer(serializers.Serializer):
-#    fact = SalesFactSerializer(many=True)
+    fact = SalesFactSerializer(many=True)
     class Meta:
         model = Sales
-#        fields = ['store', 'sku', 'fact']
-        fields = '__all__'
+        fields = ['store', 'sku', 'fact']
+#        fields = '__all__'
 
 class ShopsSerializer(serializers.ModelSerializer):
     class Meta:

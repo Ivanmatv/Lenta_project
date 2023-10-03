@@ -9,13 +9,6 @@ from .serializers import (
 )
 
 
-# class SaleViewSet(viewsets.ModelViewSet):
-#     """Представления для покупок."""
-#     queryset = Sales.objects.all()
-#     serializer_class = SalesSerializer
-#     filter_backends = (DjangoFilterBackend, )
-
-
 class ShopViewSet(viewsets.ModelViewSet):
     """Представления для магазинов."""
     queryset = Shops.objects.all()

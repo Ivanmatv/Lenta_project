@@ -3,14 +3,6 @@ from django.contrib import admin
 from .models import Forecast, Shops
 
 
-# @admin.register(Sales)
-# class SalesAdmin(admin.ModelAdmin):
-#     list_display = ('store', 'sku')
-#     search_fields = ('store',)
-#     list_filter = ('store', 'sku')
-#     empty_value_display = '-пусто-'
-
-
 @admin.register(Shops)
 class ShopAdmin(admin.ModelAdmin):
     list_display = (
@@ -31,13 +23,3 @@ class ForecastAdmin(admin.ModelAdmin):
     search_fields = ('store', 'forecast_date')
     list_filter = ('store', 'forecast_date')
     empty_value_display = '-пусто-'
-
-
-# @admin.register(Category)
-# class CategoryAdmin(admin.ModelAdmin):
-#     list_display = (
-#         'sku', 'group', 'category',
-#         'subcategory', 'uom'
-#     )
-#     search_fields = ('group', 'category', 'subcategory')
-#     empty_value_display = '-пусто-'

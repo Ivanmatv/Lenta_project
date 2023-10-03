@@ -41,27 +41,6 @@ class Shops(models.Model):
         return f'{self.store}, {self.city}, {self.division}'
 
 
-# class Categories(models.Model):
-#     """Модель товарной иерархии."""
-#     sku = models.CharField('Товар', max_length=100)
-#     group = models.CharField('Группа', max_length=100)
-#     category = models.CharField('Категория', max_length=100)
-#     subcategory = models.CharField('Подкатегория', max_length=100)
-#     uom = models.IntegerField()
-
-#     class Meta:
-#         verbose_name = 'Товар'
-#         verbose_name_plural = 'Товары'
-
-#     def __str__(self):
-#         return (
-#             self.sku,
-#             self.group,
-#             self.category,
-#             self.subcategory
-#         )
-
-
 class Forecast(models.Model):
     """Модель прогноза."""
     store = models.ForeignKey(

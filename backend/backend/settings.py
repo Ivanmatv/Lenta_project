@@ -1,13 +1,18 @@
 import os
+
 from datetime import timedelta
+from dotenv import load_dotenv
+
+load_dotenv()
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = '9bslqw#_+38j)(=4nl57^5##=m=u%7=-om@sje3-jmc*vg--pu'
+SECRET_KEY = os.getenv('SECRET_KEY',
+                       '9bslqw#_+38j)(=4nl57^5##=m=u%7=-om@sje3-jmc*vg--pu')
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 INSTALLED_APPS = [
@@ -20,6 +25,9 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'djoser',
+    'drf_yasg',
+    'django_filters',
+    'api',
     'users',
 ]
 

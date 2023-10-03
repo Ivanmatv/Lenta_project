@@ -59,8 +59,8 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_lenta',
-        'USER': 'admin1',
+        'NAME': 'db_l_db',
+        'USER': 'admin_db',
         'PASSWORD': 'qwerty1209',
         'HOST': 'localhost',
         'PORT': '5432',
@@ -101,6 +101,10 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
 REST_FRAMEWORK = {
@@ -117,7 +121,7 @@ REST_FRAMEWORK = {
 AUTH_USER_MODEL = 'users.User'
 
 DJOSER = {
-    "LOGIN_FIELD": 'email',
+    "LOGIN_FIELD": 'username',
     "SEND_ACTIVATION_EMAIL": False,
     'HIDE_USERS': False,
     "SERIALIZERS": {

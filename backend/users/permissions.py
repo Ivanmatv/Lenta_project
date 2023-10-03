@@ -6,33 +6,27 @@ User = get_user_model()
 class CustomPermissions(permissions.BasePermission):
     """
     Пользователи могут выполнять действия в зависимости от их роли:
-    - Суперпользователь и администратор могут выполнять любые действия.
-    - Сотрудники могут выполнять любые действия.
+    - Суперпользователь(администратор) могут выполнять любые действия.
     - Обычные пользователи могут только просматривать данные и выполнять действия с ними.
     - Неавторизованным пользователям запрещено выполнять любые действия.
     """
     def has_permission(self, request, view):
         if request.user.is_authenticated:
-            if request.user.is_superuser or request.user.is_admin or request.user.is_staff:
+            if request.user.is_superuser:
                 return True
-            else:
-                return True
+            return False
         return False
 
     def has_object_permission(self, request, view, obj):
         if request.user.is_authenticated:
-            if request.user.is_superuser or request.user.is_admin or request.user.is_staff:
+            if request.user.is_superuser:
                 return True
-            else:
-                return request.method in permissions.SAFE_METHODS
-        return False
+        return request.method in permissions.SAFE_METHODS
 
 
 class CustomPermissionsAccess(permissions.BasePermission):
     """
     - Суперпользователь может раздавать все права.
-    - Админ может назначить только сотрудника.
-    - Обычные пользователи не может разавать права.
     """
     def has_permission(self, request, view):
         if request.user.is_authenticated:
@@ -42,3 +36,5 @@ class CustomPermissionsAccess(permissions.BasePermission):
                 if request.method == "PATCH" and "is_staff" in request.data:
                     return True
         return False
+
+

@@ -63,35 +63,71 @@ class Forecast(models.Model):
         return f'{self.store}, {self.forecast_date}, {self.forecast}'
 
 
-# class Sales(models.Model):
-#     """Модель с информацией о количестве проданных товаров."""
-#     store = models.ForeignKey(
-#         Shops, on_delete=models.CASCADE
-#     )
-#     sku = models.ForeignKey(
-#         Categories, on_delete=models.CASCADE
-#     )
-#     fact = models.JSONField()
+class Categories(models.Model):
+    """Модель товарной иерархии."""
+    sku = models.CharField('Товар', max_length=100)
+    group = models.CharField('Группа', max_length=100)
+    category = models.CharField('Категория', max_length=100)
+    subcategory = models.CharField('Подкатегория', max_length=100)
+    uom = models.IntegerField(default=0)
 
-#     class Meta:
-#         verbose_name = 'Информация'
-#         verbose_name_plural = 'Информации'
+    class Meta:
+        verbose_name = 'Товар'
+        verbose_name_plural = 'Товары'
 
-#     def __str__(self):
-#         return (
-#             self.store,
-#             self.sku
-#         )
+    def __str__(self):
+        return f'{self.group} - {self.category} - {self.subcategory} - {self.sku}'
 
 
-# class SalesFact(models.Model):
-#     """Данные о товаре"""
-#     fact = models.ForeignKey(
-#         Sales, related_name='fact', on_delete=models.CASCADE
-#     )
-#     date = models.DateField()
-#     sales_type = models.IntegerField()
-#     sales_units = models.IntegerField()
-#     sales_units_promo = models.IntegerField()
-#     sales_rub = models.DecimalField(max_digits=10, decimal_places=2)
-#     sales_run_promo = models.DecimalField(max_digits=10, decimal_places=2)
+class Sales(models.Model):
+    """Модель с информацией о количестве проданных товаров."""
+    store = models.ForeignKey(
+        Shops, on_delete=models.CASCADE
+    )
+    sku = models.ForeignKey(
+        Categories, on_delete=models.CASCADE
+    )
+    date = models.DateField(blank=True, null=True)
+    sales_type = models.IntegerField()
+    sales_units = models.IntegerField()
+    sales_units_promo = models.IntegerField(blank=True, null=True)
+    sales_rub = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True
+    )
+    sales_run_promo = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        blank=True,
+        null=True
+    )
+
+    class Meta:
+        verbose_name = 'Информация'
+        verbose_name_plural = 'Информации'
+
+    def __str__(self):
+        return f'{self.store} - {self.sku}'
+
+
+class SalesSub(models.Model):
+    '''Модель с результатом работы модели прогноза спроса.'''
+    store = models.ForeignKey(
+        Shops, on_delete=models.CASCADE
+    )
+    sku = models.ForeignKey(
+        Categories, on_delete=models.CASCADE
+    )
+    target = models.IntegerField(default=0)
+    date = models.DateField()
+
+    class Meta:
+        verbose_name = 'прогонзыы'
+
+    def formatted_date(self):
+        return self.date.strftime("%d")
+
+    def __str__(self):
+        return f'{self.store} - {self.sku}'

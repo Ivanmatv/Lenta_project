@@ -1,6 +1,6 @@
 import os
-# from datetime import timedelta
 
+from datetime import timedelta
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -23,9 +23,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'rest_framework.authtoken',
+    'djoser',
     'drf_yasg',
     'django_filters',
     'api',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -37,6 +40,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -61,8 +66,12 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db_l_db',
+        'USER': 'admin_db',
+        'PASSWORD': 'qwerty1209',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
 
@@ -100,33 +109,38 @@ USE_TZ = True
 
 
 STATIC_URL = '/static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
-# REST_FRAMEWORK = {
-#     'DEFAULT_AUTHENTICATION_CLASSES': (
-#         'rest_framework.authentication.TokenAuthentication',
-#         'rest_framework_simplejwt.authentication.JWTAuthentication',
-#     ),
-#     'DEFAULT_PERMISSION_CLASSES': [
-#         'users.permissions.CustomPermissions',
-#         'users.permissions.CustomPermissionsAccess'
-#     ],
-# }
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# AUTH_USER_MODEL = 'users.User'
 
-# DJOSER = {
-#     "LOGIN_FIELD": 'email',
-#     "SEND_ACTIVATION_EMAIL": False,
-#     'HIDE_USERS': False,
-#     "SERIALIZERS": {
-#         "user_create": "users.serializers.CustomUserCreateSerializer",
-#         "user": "users.serializers.CustomUserSerializer",
-#         "current_user": "users.serializers.CustomUserSerializer",
-#     },
-# }
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+    'DEFAULT_PERMISSION_CLASSES': [
+        'users.permissions.CustomPermissions',
+        'users.permissions.CustomPermissionsAccess'
+    ],
+}
 
-# SIMPLE_JWT = {
-#     # Устанавливаем срок жизни токена
-#     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
-#     'AUTH_HEADER_TYPES': ('Bearer',),
-# }
+AUTH_USER_MODEL = 'users.User'
+
+DJOSER = {
+    "LOGIN_FIELD": 'username',
+    "SEND_ACTIVATION_EMAIL": False,
+    'HIDE_USERS': False,
+    "SERIALIZERS": {
+        "user_create": "users.serializers.CustomUserCreateSerializer",
+        "user": "users.serializers.CustomUserSerializer",
+        "current_user": "users.serializers.CustomUserSerializer",
+    },
+}
+
+SIMPLE_JWT = {
+    # Устанавливаем срок жизни токена
+   'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
+   'AUTH_HEADER_TYPES': ('Bearer',),
+}

@@ -90,6 +90,7 @@ docker-compose down
 - Django Rest Framework - https://www.django-rest-framework.org/
 - Docker - https://www.docker.com/
 - Rest API - https://www.django-rest-framework.org/topics/documenting-your-api/
+- PostgreSQL - https://www.postgresql.org/
 
 ### Авторы проекта:
 

@@ -70,7 +70,7 @@ DATABASES = {
         'NAME': 'db_l_db',
         'USER': 'admin_db',
         'PASSWORD': 'qwerty1209',
-        'HOST': 'localhost',
+        'HOST': 'db',
         'PORT': '5432',
     }
 }
@@ -144,3 +144,5 @@ SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(days=30),
     'AUTH_HEADER_TYPES': ('Bearer',),
 }
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

@@ -1,6 +1,6 @@
 openapi: 3.0.2
 info:
-  title: ''
+  title: 'Lenta_project'
   version: ''
 paths:
   /api/users/:

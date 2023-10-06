@@ -27,11 +27,13 @@ class ForecastViewSet(viewsets.ModelViewSet):
 
 
 class CategoriesViewSet(viewsets.ReadOnlyModelViewSet):
+    """Представления для категорий."""
     queryset = Categories.objects.all()
     serializer_class = CategoriesSerializer
 
 
 class SalesViewSet(viewsets.ReadOnlyModelViewSet):
+    """Представления для продаж."""
     queryset = Sales.objects.all()
     serializer_class = SalesSerializer
 

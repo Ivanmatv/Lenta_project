@@ -12,7 +12,7 @@ from .serializers import (
 )
 
 
-class ShopViewSet(viewsets.ModelViewSet):
+class ShopViewSet(viewsets.ReadOnlyModelViewSet):
     """Представления для магазинов."""
     queryset = Shops.objects.all()
     serializer_class = ShopSerializer
@@ -20,7 +20,7 @@ class ShopViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class ForecastViewSet(viewsets.ModelViewSet):
+class ForecastViewSet(viewsets.ReadOnlyModelViewSet):
     """Представления для прогнозов."""
     http_method_names = ['get', 'post']
     queryset = Forecast.objects.all()

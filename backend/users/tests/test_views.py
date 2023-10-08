@@ -1,38 +1,37 @@
 # import json
 # from django.test import TestCase
 # from rest_framework.test import APIRequestFactory
-# from rest_framework.authtoken.models import Token
 # from django.contrib.auth.models import User
-# from rest_framework import status
+# from rest_framework.authtoken.models import Token 
 # from users.models import User
-# from users.serializers import CustomUserSerializer
 # from users.views import CustomUserViewSet
 
 
-# class ViewsTestCase(TestCase):
+# class CustomUserViewSetTestCase(TestCase):
 #     def setUp(self):
 #         self.factory = APIRequestFactory()
-#         self.user = User.objects.create(username='testuser', email='testuser@example.com')
+#         self.user = User.objects.create_user(
+#             username="testuser",
+#             email='test@mail.com',
+#             password="testpassword"
+#         )
 #         self.token = Token.objects.create(user=self.user)
+#         self.view = CustomUserViewSet.as_view({'get': 'user_info'})
 
-#     def test_user_viewset(self):
-#         view = CustomUserViewSet.as_view({'get': 'list'})
-#         request = self.factory.get('/api/users/')
-#         request.auth = self.token  # Аутентификация с использованием токена
-#         response = view(request)
+#     def test_user_info(self):
+#         request = self.factory.get('/api/user_info/')
+#         request.user = self.user
+#         request.META['HTTP_AUTHORIZATION'] = f'Token {self.token.key}'
+#         response = self.view(request)
+#         response.render()
 #         self.assertEqual(response.status_code, 200)
+#         data = json.loads(response.content)
+#         self.assertIn('token', data)
+#         self.assertIn('user_data', data)
+#         self.assertEqual(data['user_data']['username'], self.user.username)
 
-#     def test_user_info_action(self):
-#         view = CustomUserViewSet.as_view({'get': 'user_info'})
-#         request = self.factory.get('/api/users/user_info/')
-#         request.auth = self.token  # Аутентификация с использованием токена
-#         response = view(request)
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertIn('token', response.data)
-#         self.assertIn('user_data', response.data)
-
-#     def test_user_info_action_unauthenticated(self):
-#         view = CustomUserViewSet.as_view({'get': 'user_info'})
-#         request = self.factory.get('/api/users/user_info/')
-#         response = view(request)
-#         self.assertEqual(response.status_code, status.HTTP_401_UNAUTHORIZED)
+#     def test_user_info_unauthenticated(self):
+#         request = self.factory.get('/api/user_info/')
+#         response = self.view(request)
+#         response.render()
+#         self.assertEqual(response.status_code, 401)

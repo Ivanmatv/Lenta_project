@@ -20,10 +20,15 @@ class CustomUserViewSet(UserViewSet):
     @action(detail=False, methods=['GET'])
     def user_info(self, request):
         user = request.user
-        refresh = RefreshToken.for_user(user)
-
-        serializer = self.get_serializer(user)
-        return Response({
-            'token': str(refresh.access_token),
-            'user_data': serializer.data
-        }, status=status.HTTP_200_OK)
+        if user.is_authenticated:
+            refresh = RefreshToken.for_user(user)
+            serializer = self.get_serializer(user)
+            return Response({
+                'token': str(refresh.access_token),
+                'user_data': serializer.data
+            }, status=status.HTTP_200_OK)
+        else:
+            return Response(
+                {'error': 'User is not authenticated'},
+                status=status.HTTP_401_UNAUTHORIZED
+            )

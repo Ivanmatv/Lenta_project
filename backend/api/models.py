@@ -69,7 +69,7 @@ class Categories(models.Model):
     group = models.CharField('Группа', max_length=100)
     category = models.CharField('Категория', max_length=100)
     subcategory = models.CharField('Подкатегория', max_length=100)
-    uom = models.IntegerField(default=0)
+    uom = models.IntegerField('Единицы товара', default=0)
 
     class Meta:
         verbose_name = 'Товар'

@@ -1,50 +1,91 @@
 from django.test import TestCase
-from users.models import User
-
-from rest_framework.test import APIClient
+from django.contrib.auth.models import User
+from rest_framework.authtoken.models import Token
+from rest_framework.test import APIRequestFactory
 
 from api.models import Categories, Forecast, Sales, Shops
+from users.models import User
+from api.views import (
+    ShopViewSet,
+    ForecastViewSet,
+    CategoriesViewSet,
+    SalesViewSet
+)
 
 
-class ShopViewSetTestCase(TestCase):
+class ViewsTestCase(TestCase):
     def setUp(self):
-        self.client = APIClient()
-        self.shop = Shops.objects.create(name="Shop 1", location="Location 1")
+        self.factory = APIRequestFactory()
+        self.user = User.objects.create_user(
+            username='testuser',
+            email='test@mail.com'
+        )
+        self.token = Token.objects.create(user=self.user)
+        self.shop = Shops.objects.create(
+            store="Shop 1",
+            city="Moscow",
+            division="Moscow",
+            type_format="1",
+            loc="1",
+            size="1",
+            is_active=True
+        )
+        self.forecast = Forecast.objects.create(
+            store=self.shop,
+            forecast_date="2023-10-07",
+            forecast={}
+        )
+        self.category = Categories.objects.create(
+            sku="Milk",
+            group="group 1",
+            category="Category 1",
+            subcategory="Milk1"
+        )
+        self.sale = Sales.objects.create(
+            store=self.shop,
+            sku=self.category,
+            date="2023-10-07",
+            sales_type="1",
+            sales_units="1",
+            sales_units_promo="1",
+            sales_rub="10",
+            sales_run_promo="10",
+        )
 
-    def test_list_shops(self):
-        response = self.client.get('/api/shops/')  # Замените на ваш URL
+    def test_shop_viewset(self):
+        view = ShopViewSet.as_view({'get': 'list'})
+        request = self.factory.get('/api/shops/')
+        request.auth = self.token
+        response = view(request)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
 
-
-class ForecastViewSetTestCase(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.forecast = Forecast.objects.create(data="Your forecast data")
-
-    def test_list_forecasts(self):
-        response = self.client.get('/api/forecasts/')  # Замените на ваш URL
+    def test_forecast_viewset(self):
+        view = ForecastViewSet.as_view({'get': 'list', 'post': 'create'})
+        request = self.factory.get('/api/forecasts/')
+        request.auth = self.token
+        response = view(request)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
 
-
-class CategoriesViewSetTestCase(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.category = Categories.objects.create(name="Category 1")
-
-    def test_list_categories(self):
-        response = self.client.get('/api/categories/')  # Замените на ваш URL
+    def test_categories_viewset(self):
+        view = CategoriesViewSet.as_view({'get': 'list'})
+        request = self.factory.get('/api/categories/')
+        response = view(request)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
 
-
-class SalesViewSetTestCase(TestCase):
-    def setUp(self):
-        self.client = APIClient()
-        self.sale = Sales.objects.create(date="2023-10-05", amount=100)
-
-    def test_list_sales(self):
-        response = self.client.get('/api/sales/')  # Замените на ваш URL
+    def test_sales_viewset_list(self):
+        view = SalesViewSet.as_view({'get': 'list'})
+        request = self.factory.get('/api/sales/')
+        response = view(request)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(len(response.data), 1)
+
+    def test_sales_viewset_list_with_date_filter(self):
+        view = SalesViewSet.as_view({'get': 'list'})
+        request = self.factory.get('/api/sales/', {'date': '2023-10-07'})
+        response = view(request)
+        self.assertEqual(response.status_code, 200)
+
+    def test_sales_viewset_detail(self):
+        view = SalesViewSet.as_view({'get': 'retrieve'})
+        request = self.factory.get('/api/sales/1/')
+        response = view(request, pk=self.sale.pk)
+        self.assertEqual(response.status_code, 200)

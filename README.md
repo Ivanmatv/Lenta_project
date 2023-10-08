@@ -92,7 +92,17 @@ docker-compose down
 - Rest API - https://www.django-rest-framework.org/topics/documenting-your-api/
 - PostgreSQL - https://www.postgresql.org/
 
-### Авторы проекта:
-
+## Авторы проекта
+### backend developers:
 https://github.com/Ivanmatv - Иван Матвеев
 
+### frontend developers:
+
+### designers:
+
+### data science:
+https://github.com/NataliaShcheglova - Наталья Щеглова
+
+https://github.com/Danspers - Данила Солтык
+
+https://github.com/Skrebcov - Артём Скребцов

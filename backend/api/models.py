@@ -124,7 +124,7 @@ class SalesSub(models.Model):
     date = models.DateField()
 
     class Meta:
-        verbose_name = 'прогонзыы'
+        verbose_name = 'прогонзы'
 
     def formatted_date(self):
         return self.date.strftime("%d")

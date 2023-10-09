@@ -1,4 +1,4 @@
-# Lenta_project
+# Lenta
 
 ### Опиание проекта
 Проект в рамках хакатона Лента х Практикум сентябрь’23 на задаче:
@@ -44,6 +44,11 @@ python manage.py makemigrations
 ```
 python manage.py migrate
 ```
+Создание админа:
+```
+python manage.py createsuperuser
+```
+
 Выполните команду для запуска локально:
 
 ```
@@ -80,8 +85,20 @@ python manage.py load_csv_data
 docker-compose down
 ```
 
-### Примеры:
+### Документация проекта:
+После локального запуска проекта ( python manage.py runserver ), для просмотра документации - 
 
+http://127.0.0.1:8000/swagger/
+
+### Примеры запросов:
+
+- http://127.0.0.1:8000/api/forecast/ - прогнозы
+
+- http://127.0.0.1:8000/api/shops/ - магазины
+
+- http://127.0.0.1:8000/api/sales/ - товары
+
+- http://127.0.0.1:8000/api/categories/ - категории товаров
 
 ### Использумые технологии:
 

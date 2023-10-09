@@ -1,8 +1,12 @@
-# Lenta_project
+# Lenta
 
 ### Опиание проекта
 Проект в рамках хакатона Лента х Практикум сентябрь’23 на задаче:
 Создание предсказательной модели и его интерфейса по прогнозированию спроса на товары заказчика собственного производства ООО “Лента”.
+
+Необходимо создать интерфейс и алгоритм прогноза спроса на 14 дней для товаров собственного производства. Гранулярность ТК-SKU-День. 
+Прогноз позволит повысить доступность и продажи в ТК, без повышения списаний и повышение маржинальности. При изготовлении товаров СП сотрудники будут ориентироваться не на экспертный подход, а на ML прогноз спроса, в соответствии с которым будут изготавливать продукцию и планировать заказы сырья. 
+
 
 ### Установка:
 Клонировать репозиторий и перейти в него в командной строке:
@@ -10,7 +14,7 @@
 git clone https://github.com/Ivanmatv/Lenta_project.git
 ```
 ```
-cd foodgram-project-react
+cd Lenta_project
 ```
 Клонировать и установить виртуальное окружение:
 
@@ -33,19 +37,19 @@ cd backend
 pip install -r requirements.txt
 ```
 
-Применить миграции:
+В папке с файлом manage.py применить миграции:
 ```
-python manage.py makemigrations users
+python manage.py makemigrations
 ```
-```
-python manage.py makemigrations recipes
-```
-
 ```
 python manage.py migrate
 ```
+Создание админа:
+```
+python manage.py createsuperuser
+```
 
-***- В папке с файлом manage.py выполните команду для запуска локально:***
+Выполните команду для запуска локально:
 
 ```
 python manage.py runserver
@@ -70,11 +74,6 @@ docker-compose exec backend python manage.py migrate
 docker-compose exec backend python manage.py createsuperuser
 ```
 
-Загружаем статику:
-```bash
-docker-compose exec backend python manage.py collectstatic --no-input 
-```
-
 Наполните базу данных ингредиентами и тегами. Выполняйте команду из дериктории где находится файл manage.py:
 ```
 python manage.py load_csv_data
@@ -86,8 +85,20 @@ python manage.py load_csv_data
 docker-compose down
 ```
 
-### Примеры:
+### Документация проекта:
+После локального запуска проекта ( python manage.py runserver ), для просмотра документации - 
 
+http://127.0.0.1:8000/swagger/
+
+### Примеры запросов:
+
+- http://127.0.0.1:8000/api/forecast/ - прогнозы
+
+- http://127.0.0.1:8000/api/shops/ - магазины
+
+- http://127.0.0.1:8000/api/sales/ - товары
+
+- http://127.0.0.1:8000/api/categories/ - категории товаров
 
 ### Использумые технологии:
 
@@ -96,8 +107,19 @@ docker-compose down
 - Django Rest Framework - https://www.django-rest-framework.org/
 - Docker - https://www.docker.com/
 - Rest API - https://www.django-rest-framework.org/topics/documenting-your-api/
+- PostgreSQL - https://www.postgresql.org/
 
-### Авторы проекта:
-
+## Авторы проекта
+### backend developers:
 https://github.com/Ivanmatv - Иван Матвеев
 
+### frontend developers:
+
+### designers:
+
+### data science:
+https://github.com/NataliaShcheglova - Наталья Щеглова
+
+https://github.com/Danspers - Данила Солтык
+
+https://github.com/Skrebcov - Артём Скребцов

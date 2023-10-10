@@ -113,6 +113,7 @@ http://127.0.0.1:8000/swagger/
 - PostgreSQL - https://www.postgresql.org/
 
 ## Авторы проекта
-### backend developers:
+
 https://github.com/Ivanmatv - Иван Матвеев
+
 https://github.com/Masha-Starikova - Мария Старикова

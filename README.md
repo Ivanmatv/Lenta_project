@@ -77,12 +77,15 @@ docker-compose exec backend python manage.py createsuperuser
 Наполните базу данных ингредиентами и тегами. Выполняйте команду из дериктории где находится файл manage.py:
 ```
 python manage.py load_csv_data
-
 ```
 
 Остановить работу всех контейнеров командой:
 ```
 docker-compose down
+```
+Выполнить тесты:
+``` 
+python manage.py test
 ```
 
 ### Документация проекта:
@@ -112,14 +115,4 @@ http://127.0.0.1:8000/swagger/
 ## Авторы проекта
 ### backend developers:
 https://github.com/Ivanmatv - Иван Матвеев
-
-### frontend developers:
-
-### designers:
-
-### data science:
-https://github.com/NataliaShcheglova - Наталья Щеглова
-
-https://github.com/Danspers - Данила Солтык
-
-https://github.com/Skrebcov - Артём Скребцов
+https://github.com/Masha-Starikova - Мария Старикова

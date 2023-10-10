@@ -1,7 +1,9 @@
 from rest_framework import permissions
+
 from django.contrib.auth import get_user_model
 
 User = get_user_model()
+
 
 class CustomPermissions(permissions.BasePermission):
     """
@@ -36,5 +38,3 @@ class CustomPermissionsAccess(permissions.BasePermission):
                 if request.method == "PATCH" and "is_staff" in request.data:
                     return True
         return False
-
-

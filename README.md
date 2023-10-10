@@ -112,14 +112,4 @@ http://127.0.0.1:8000/swagger/
 ## Авторы проекта
 ### backend developers:
 https://github.com/Ivanmatv - Иван Матвеев
-
-### frontend developers:
-
-### designers:
-
-### data science:
-https://github.com/NataliaShcheglova - Наталья Щеглова
-
-https://github.com/Danspers - Данила Солтык
-
-https://github.com/Skrebcov - Артём Скребцов
+https://github.com/Masha-Starikova - Мария Старикова
